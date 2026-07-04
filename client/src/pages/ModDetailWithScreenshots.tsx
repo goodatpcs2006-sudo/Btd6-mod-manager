@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Loader2, Download, Heart, ArrowLeft, Share2, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { ReviewForm } from "@/components/ReviewForm";
+import { ModInstallButton, ModHelperStatus } from "@/components/ModInstallButton";
 
 export default function ModDetail() {
   const params = useParams();
@@ -285,11 +286,25 @@ export default function ModDetail() {
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-slate-800/50 backdrop-blur rounded-lg p-6 border border-slate-700 sticky top-24">
-              {/* Download Button */}
+              {/* Install Button with BTD6 Mod Helper Support */}
+              <div className="mb-4">
+                <ModInstallButton
+                  modId={modId}
+                  modName={mod.name}
+                  downloadUrl={mod.downloadUrl}
+                />
+              </div>
+
+              {/* BTD6 Mod Helper Status */}
+              <div className="mb-4 p-3 bg-slate-800/50 border border-slate-700 rounded">
+                <ModHelperStatus />
+              </div>
+
+              {/* Direct Download Link */}
               <a href={mod.downloadUrl} target="_blank" rel="noopener noreferrer">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 mb-4">
+                <Button variant="outline" className="w-full mb-4">
                   <Download size={20} className="mr-2" />
-                  Download Mod
+                  Direct Download
                 </Button>
               </a>
 
