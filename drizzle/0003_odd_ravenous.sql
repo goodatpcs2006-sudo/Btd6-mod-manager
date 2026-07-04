@@ -1,0 +1,1 @@
+ALTER TABLE `favorites` ADD CONSTRAINT `unique_user_mod` UNIQUE(`userId`,`modId`);

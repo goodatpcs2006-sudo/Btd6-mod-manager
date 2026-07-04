@@ -16,9 +16,9 @@
 - [x] Build favorites/bookmarks management system
 
 ## Phase 3: Advanced Features
-- [ ] Add mod categories and tags system
-- [ ] Implement mod ratings and reviews
-- [ ] Create installation guide with step-by-step instructions
+- [x] Add mod categories and tags system
+- [x] Implement mod ratings and reviews (with submission UI)
+- [x] Create installation guide with step-by-step instructions
 - [ ] Add mod compatibility checker
 - [ ] Build mod collection/pack creation feature
 - [ ] Implement mod update notifications
@@ -45,5 +45,5 @@
 - [x] Add grid/list view toggle to mod browser
 - [x] Extend mod schema to support multiple screenshots and gallery
 - [x] Add React Query cache invalidation after favorite mutations
-- [ ] Prevent duplicate favorites at database/API layer
+- [x] Prevent duplicate favorites at database/API layer
 - [ ] Make installation guides mod-specific instead of hardcoded

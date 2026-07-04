@@ -152,7 +152,16 @@ export async function getUserFavorites(userId: number) {
 export async function addFavorite(userId: number, modId: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  return db.insert(favorites).values({ userId, modId });
+  try {
+    return await db.insert(favorites).values({ userId, modId });
+  } catch (error: any) {
+    // Handle duplicate favorite gracefully
+    if (error?.code === 'ER_DUP_ENTRY' || error?.message?.includes('UNIQUE')) {
+      // Already favorited, return success
+      return { success: true, message: 'Already favorited' };
+    }
+    throw error;
+  }
 }
 
 export async function removeFavorite(userId: number, modId: number) {

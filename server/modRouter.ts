@@ -57,7 +57,17 @@ export const modRouter = router({
 
   addFavorite: protectedProcedure
     .input(z.object({ modId: z.number() }))
-    .mutation(({ ctx, input }) => addFavorite(ctx.user.id, input.modId)),
+    .mutation(async ({ ctx, input }) => {
+      try {
+        return addFavorite(ctx.user.id, input.modId);
+      } catch (error: any) {
+        // Handle duplicate entry error gracefully
+        if (error?.code === 'ER_DUP_ENTRY' || error?.message?.includes('UNIQUE')) {
+          return { success: true, message: 'Already favorited' };
+        }
+        throw error;
+      }
+    }),
 
   removeFavorite: protectedProcedure
     .input(z.object({ modId: z.number() }))

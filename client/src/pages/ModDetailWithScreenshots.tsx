@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Download, Heart, ArrowLeft, Share2, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { ReviewForm } from "@/components/ReviewForm";
 
 export default function ModDetail() {
   const params = useParams();
@@ -245,6 +246,12 @@ export default function ModDetail() {
                 </div>
               </div>
             )}
+
+            {/* Review Form */}
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold mb-4">Write a Review</h3>
+              <ReviewForm modId={modId} />
+            </div>
 
             {/* Reviews */}
             <div className="mb-8">
