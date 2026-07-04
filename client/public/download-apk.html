@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTD6 Mod Manager - Download APK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        
+        .content {
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(30, 41, 59, 0.5);
+            border-left: 3px solid #60a5fa;
+            border-radius: 8px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #60a5fa;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 5px;
+        }
+        
+        .step-description {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .button-primary {
+            background: #60a5fa;
+            color: white;
+        }
+        
+        .button-primary:hover {
+            background: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(96, 165, 250, 0.3);
+        }
+        
+        .button-secondary {
+            background: rgba(51, 65, 85, 0.5);
+            color: #cbd5e1;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+        }
+        
+        .button-secondary:hover {
+            background: rgba(71, 85, 105, 0.5);
+            color: #e2e8f0;
+        }
+        
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #fbbf24;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+            border-top: 1px solid rgba(51, 65, 85, 0.3);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🎮</div>
+            <h1>BTD6 Mod Manager</h1>
+            <p class="subtitle">Download and install Bloons TD 6 mods</p>
+        </div>
+        
+        <div class="content">
+            <div class="info-box">
+                <strong>📱 No PC Required!</strong><br>
+                Get your APK instantly using our cloud builder - no computer needed!
+            </div>
+            
+            <div class="button-group">
+                <a href="https://expo.dev" class="button button-primary" target="_blank">
+                    🚀 Build with Expo (Recommended)
+                </a>
+                <a href="#how-it-works" class="button button-secondary">
+                    ℹ️ How It Works
+                </a>
+            </div>
+            
+            <h2 style="font-size: 18px; margin: 25px 0 15px 0; color: #f1f5f9;">Features</h2>
+            <ul class="feature-list">
+                <li>Browse Bloons TD 6 mods</li>
+                <li>BTD6 Mod Helper integration</li>
+                <li>One-click mod installation</li>
+                <li>User reviews & ratings</li>
+                <li>Favorites management</li>
+                <li>GitHub & Nexus Mods support</li>
+            </ul>
+            
+            <h2 style="font-size: 18px; margin: 25px 0 15px 0; color: #f1f5f9;" id="how-it-works">How to Get Your APK</h2>
+            
+            <div class="step">
+                <div style="margin-bottom: 10px;">
+                    <span class="step-number">1</span>
+                    <span class="step-title">Sign Up (Free)</span>
+                </div>
+                <div class="step-description">
+                    Create a free Expo account at <a href="https://expo.dev" style="color: #60a5fa;" target="_blank">expo.dev</a>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div style="margin-bottom: 10px;">
+                    <span class="step-number">2</span>
+                    <span class="step-title">Build Your APK</span>
+                </div>
+                <div class="step-description">
+                    Use Expo's cloud builder to compile your APK (takes ~5 minutes)
+                </div>
+            </div>
+            
+            <div class="step">
+                <div style="margin-bottom: 10px;">
+                    <span class="step-number">3</span>
+                    <span class="step-title">Download</span>
+                </div>
+                <div class="step-description">
+                    Download the APK file directly to your phone
+                </div>
+            </div>
+            
+            <div class="step">
+                <div style="margin-bottom: 10px;">
+                    <span class="step-number">4</span>
+                    <span class="step-title">Install & Use</span>
+                </div>
+                <div class="step-description">
+                    Enable "Unknown Sources" in Settings, install, and start using!
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Requirements:</strong><br>
+                • BTD6 installed on your device<br>
+                • BTD6 Mod Helper (download from GitHub)<br>
+                • MelonLoader (download from melonwiki.xyz)
+            </div>
+            
+            <div class="button-group">
+                <a href="https://expo.dev" class="button button-primary" target="_blank">
+                    Start Building Now
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>BTD6 Mod Manager • Powered by Expo EAS Build</p>
+            <p style="margin-top: 10px;">
+                <a href="https://github.com/doombubbles/BTD6-Mod-Helper" style="color: #64748b;" target="_blank">BTD6 Mod Helper</a> • 
+                <a href="https://melonwiki.xyz" style="color: #64748b;" target="_blank">MelonLoader</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
