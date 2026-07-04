@@ -12,7 +12,12 @@ export default function Profile() {
     { enabled: !!user }
   );
 
-  const removeFavoriteMutation = trpc.mods.removeFavorite.useMutation();
+  const utils = trpc.useUtils();
+  const removeFavoriteMutation = trpc.mods.removeFavorite.useMutation({
+    onSuccess: () => {
+      utils.mods.favorites.invalidate();
+    },
+  });
 
   const handleRemoveFavorite = async (modId: number) => {
     try {

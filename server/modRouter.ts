@@ -13,6 +13,9 @@ import {
   getModReviews,
   createReview,
   updateReview,
+  getModScreenshots,
+  addScreenshot,
+  deleteScreenshot,
 } from "./db";
 
 export const modRouter = router({
@@ -123,4 +126,21 @@ export const modRouter = router({
       const { id, ...updates } = input;
       return updateMod(id, updates);
     }),
+
+  screenshots: publicProcedure
+    .input(z.object({ modId: z.number() }))
+    .query(({ input }) => getModScreenshots(input.modId)),
+
+  addScreenshot: adminProcedure
+    .input(z.object({
+      modId: z.number(),
+      url: z.string().url(),
+      caption: z.string().optional(),
+      order: z.number().optional(),
+    }))
+    .mutation(({ input }) => addScreenshot(input)),
+
+  deleteScreenshot: adminProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(({ input }) => deleteScreenshot(input.id)),
 });

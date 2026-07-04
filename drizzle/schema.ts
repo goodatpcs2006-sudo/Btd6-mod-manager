@@ -69,3 +69,15 @@ export const reviews = mysqlTable("reviews", {
 
 export type Review = typeof reviews.$inferSelect;
 export type InsertReview = typeof reviews.$inferInsert;
+
+export const screenshots = mysqlTable("screenshots", {
+  id: int("id").autoincrement().primaryKey(),
+  modId: int("modId").notNull(),
+  url: text("url").notNull(),
+  caption: text("caption"),
+  order: int("order").default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Screenshot = typeof screenshots.$inferSelect;
+export type InsertScreenshot = typeof screenshots.$inferInsert;

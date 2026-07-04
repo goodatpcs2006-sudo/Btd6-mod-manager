@@ -1,15 +1,17 @@
 import { useParams } from "wouter";
+import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Download, Heart, ArrowLeft, Share2, ExternalLink } from "lucide-react";
+import { Loader2, Download, Heart, ArrowLeft, Share2, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function ModDetail() {
   const params = useParams();
   const modId = parseInt(params.id as string);
   const { user } = useAuth();
+  const [currentScreenshotIndex, setCurrentScreenshotIndex] = useState(0);
 
   const { data: mod, isLoading, error } = trpc.mods.detail.useQuery(
     { id: modId },
@@ -17,6 +19,11 @@ export default function ModDetail() {
   );
 
   const { data: reviews = [] } = trpc.mods.reviews.useQuery(
+    { modId },
+    { enabled: !!modId }
+  );
+
+  const { data: screenshots = [] } = trpc.mods.screenshots.useQuery(
     { modId },
     { enabled: !!modId }
   );
@@ -56,6 +63,18 @@ export default function ModDetail() {
     }
   };
 
+  const handlePrevScreenshot = () => {
+    setCurrentScreenshotIndex((prev) =>
+      prev === 0 ? screenshots.length - 1 : prev - 1
+    );
+  };
+
+  const handleNextScreenshot = () => {
+    setCurrentScreenshotIndex((prev) =>
+      prev === screenshots.length - 1 ? 0 : prev + 1
+    );
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
@@ -84,6 +103,8 @@ export default function ModDetail() {
     ? (reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / reviews.length).toFixed(1)
     : 0;
 
+  const currentScreenshot = screenshots[currentScreenshotIndex];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white">
       {/* Header */}
@@ -101,8 +122,62 @@ export default function ModDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Info */}
           <div className="lg:col-span-2">
-            {/* Hero Image */}
-            {mod.imageUrl && (
+            {/* Screenshots Gallery */}
+            {screenshots.length > 0 ? (
+              <div className="mb-6">
+                <div className="relative w-full bg-slate-700 rounded-lg overflow-hidden mb-4" style={{ aspectRatio: "16/9" }}>
+                  <img
+                    src={currentScreenshot.url}
+                    alt={currentScreenshot.caption || `Screenshot ${currentScreenshotIndex + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                  {screenshots.length > 1 && (
+                    <>
+                      <button
+                        onClick={handlePrevScreenshot}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 p-2 rounded-full transition"
+                      >
+                        <ChevronLeft size={24} />
+                      </button>
+                      <button
+                        onClick={handleNextScreenshot}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 p-2 rounded-full transition"
+                      >
+                        <ChevronRight size={24} />
+                      </button>
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 px-3 py-1 rounded-full text-sm">
+                        {currentScreenshotIndex + 1} / {screenshots.length}
+                      </div>
+                    </>
+                  )}
+                </div>
+                {currentScreenshot.caption && (
+                  <p className="text-slate-300 text-sm">{currentScreenshot.caption}</p>
+                )}
+                {/* Thumbnail strip */}
+                {screenshots.length > 1 && (
+                  <div className="flex gap-2 mt-4 overflow-x-auto">
+                    {screenshots.map((screenshot: any, index: number) => (
+                      <button
+                        key={screenshot.id}
+                        onClick={() => setCurrentScreenshotIndex(index)}
+                        className={`flex-shrink-0 w-16 h-16 rounded overflow-hidden border-2 transition ${
+                          index === currentScreenshotIndex
+                            ? "border-blue-500"
+                            : "border-slate-600 hover:border-slate-500"
+                        }`}
+                      >
+                        <img
+                          src={screenshot.url}
+                          alt={`Thumbnail ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : mod.imageUrl ? (
               <div className="w-full h-64 bg-slate-700 rounded-lg overflow-hidden mb-6">
                 <img
                   src={mod.imageUrl}
@@ -110,7 +185,7 @@ export default function ModDetail() {
                   className="w-full h-full object-cover"
                 />
               </div>
-            )}
+            ) : null}
 
             {/* Title and Meta */}
             <div className="mb-6">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Search, Download, Heart } from "lucide-react";
+import { Loader2, Search, Download, Heart, Grid3x3, List } from "lucide-react";
 
 const CATEGORIES = [
   "Gameplay",
@@ -23,6 +23,20 @@ export default function ModBrowser() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [page, setPage] = useState(0);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+
+  // Load view mode preference from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("modBrowserViewMode");
+    if (saved === "list" || saved === "grid") {
+      setViewMode(saved);
+    }
+  }, []);
+
+  const handleViewModeChange = (mode: "grid" | "list") => {
+    setViewMode(mode);
+    localStorage.setItem("modBrowserViewMode", mode);
+  };
 
   // Fetch mods based on search or category
   const { data: mods = [], isLoading, error } = trpc.mods.list.useQuery(
@@ -105,6 +119,26 @@ export default function ModBrowser() {
             <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
               Search
             </Button>
+            <div className="flex gap-1 bg-slate-800 border border-slate-600 rounded-lg p-1">
+              <Button
+                size="sm"
+                variant={viewMode === "grid" ? "default" : "ghost"}
+                onClick={() => handleViewModeChange("grid")}
+                className="px-3"
+                title="Grid view"
+              >
+                <Grid3x3 size={16} />
+              </Button>
+              <Button
+                size="sm"
+                variant={viewMode === "list" ? "default" : "ghost"}
+                onClick={() => handleViewModeChange("list")}
+                className="px-3"
+                title="List view"
+              >
+                <List size={16} />
+              </Button>
+            </div>
           </form>
         </div>
       </div>
@@ -144,7 +178,7 @@ export default function ModBrowser() {
             </div>
           </div>
 
-          {/* Mods Grid */}
+          {/* Mods Grid/List */}
           <div className="lg:col-span-3">
             {isLoadingMods ? (
               <div className="flex justify-center items-center h-96">
@@ -156,12 +190,12 @@ export default function ModBrowser() {
               </div>
             ) : displayMods && displayMods.length > 0 ? (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 gap-6 mb-8" : "space-y-4 mb-8"}>
                   {displayMods.map((mod: any) => (
                     <a key={mod.id} href={`/mod/${mod.id}`} className="block">
-                      <Card className="bg-slate-800/50 border-slate-700 hover:border-blue-500 transition-colors cursor-pointer h-full">
+                      <Card className={`bg-slate-800/50 border-slate-700 hover:border-blue-500 transition-colors cursor-pointer ${viewMode === "list" ? "flex gap-4" : "h-full"}`}>
                         {mod.imageUrl && (
-                          <div className="w-full h-48 bg-slate-700 overflow-hidden rounded-t-lg">
+                          <div className={viewMode === "list" ? "w-32 h-32 bg-slate-700 overflow-hidden rounded flex-shrink-0" : "w-full h-48 bg-slate-700 overflow-hidden rounded-t-lg"}>
                             <img
                               src={mod.imageUrl}
                               alt={mod.name}
@@ -169,43 +203,45 @@ export default function ModBrowser() {
                             />
                           </div>
                         )}
-                        <CardHeader>
-                          <div className="flex items-start justify-between gap-2">
-                            <div className="flex-1">
-                              <CardTitle className="text-white">{mod.name}</CardTitle>
-                              <CardDescription className="text-slate-400">
-                                by {mod.author}
-                              </CardDescription>
+                        <div className="flex-1">
+                          <CardHeader className={viewMode === "list" ? "pb-2" : ""}>
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="flex-1">
+                                <CardTitle className="text-white text-lg">{mod.name}</CardTitle>
+                                <CardDescription className="text-slate-400 text-sm">
+                                  by {mod.author}
+                                </CardDescription>
+                              </div>
+                              <Badge variant="secondary" className="flex-shrink-0">{mod.version}</Badge>
                             </div>
-                            <Badge variant="secondary">{mod.version}</Badge>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-slate-300 text-sm mb-4 line-clamp-2">
-                            {mod.description || "No description available"}
-                          </p>
-                          <div className="flex items-center gap-4 text-sm text-slate-400">
-                            <div className="flex items-center gap-1">
-                              <Download size={16} />
-                              <span>{mod.downloads || 0} downloads</span>
-                            </div>
-                            {mod.rating > 0 && (
+                          </CardHeader>
+                          <CardContent className={viewMode === "list" ? "pt-0" : ""}>
+                            <p className={`text-slate-300 text-sm mb-3 ${viewMode === "list" ? "line-clamp-1" : "line-clamp-2"}`}>
+                              {mod.description || "No description available"}
+                            </p>
+                            <div className="flex items-center gap-4 text-sm text-slate-400">
                               <div className="flex items-center gap-1">
-                                <Heart size={16} />
-                                <span>{mod.rating}/5</span>
+                                <Download size={16} />
+                                <span>{mod.downloads || 0}</span>
+                              </div>
+                              {mod.rating > 0 && (
+                                <div className="flex items-center gap-1">
+                                  <Heart size={16} />
+                                  <span>{mod.rating}/5</span>
+                                </div>
+                              )}
+                            </div>
+                            {viewMode === "grid" && mod.tags && (
+                              <div className="flex flex-wrap gap-2 mt-4">
+                                {JSON.parse(mod.tags || "[]").slice(0, 3).map((tag: string) => (
+                                  <Badge key={tag} variant="outline" className="text-xs">
+                                    {tag}
+                                  </Badge>
+                                ))}
                               </div>
                             )}
-                          </div>
-                          {mod.tags && (
-                            <div className="flex flex-wrap gap-2 mt-4">
-                              {JSON.parse(mod.tags || "[]").slice(0, 3).map((tag: string) => (
-                                <Badge key={tag} variant="outline" className="text-xs">
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
-                          )}
-                        </CardContent>
+                          </CardContent>
+                        </div>
                       </Card>
                     </a>
                   ))}

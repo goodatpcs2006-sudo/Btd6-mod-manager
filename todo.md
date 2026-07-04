@@ -40,10 +40,10 @@
 
 
 ## Phase 3.5: Data Integration & Bug Fixes
-- [ ] Implement server-side GitHub aggregation for btd6-mod sources
-- [ ] Implement Nexus Mods API integration with secure config handling
-- [ ] Add grid/list view toggle to mod browser
-- [ ] Extend mod schema to support multiple screenshots and gallery
-- [ ] Add React Query cache invalidation after favorite mutations
+- [x] Implement server-side GitHub aggregation for btd6-mod sources
+- [x] Implement Nexus Mods API integration with secure config handling
+- [x] Add grid/list view toggle to mod browser
+- [x] Extend mod schema to support multiple screenshots and gallery
+- [x] Add React Query cache invalidation after favorite mutations
 - [ ] Prevent duplicate favorites at database/API layer
 - [ ] Make installation guides mod-specific instead of hardcoded

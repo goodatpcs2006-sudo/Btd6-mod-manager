@@ -1,6 +1,6 @@
 import { eq, like, desc, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, mods, Mod, InsertMod, favorites, reviews, Review, InsertReview } from "../drizzle/schema";
+import { InsertUser, users, mods, Mod, InsertMod, favorites, reviews, Review, InsertReview, screenshots, Screenshot, InsertScreenshot } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -178,4 +178,31 @@ export async function updateReview(id: number, updates: Partial<Review>) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   return db.update(reviews).set(updates).where(eq(reviews.id, id));
+}
+
+// Screenshots queries
+export async function getModScreenshots(modId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(screenshots)
+    .where(eq(screenshots.modId, modId))
+    .orderBy(screenshots.order);
+}
+
+export async function addScreenshot(screenshot: InsertScreenshot) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(screenshots).values(screenshot);
+}
+
+export async function deleteScreenshot(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.delete(screenshots).where(eq(screenshots.id, id));
+}
+
+export async function updateScreenshot(id: number, updates: Partial<Screenshot>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(screenshots).set(updates).where(eq(screenshots.id, id));
 }

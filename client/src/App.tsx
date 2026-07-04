@@ -5,8 +5,9 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ModBrowser from "./pages/ModBrowser";
-import ModDetail from "./pages/ModDetail";
+import ModDetail from "./pages/ModDetailWithScreenshots";
 import Profile from "./pages/Profile";
+// Note: ModDetail is now ModDetailWithScreenshots which includes gallery support
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
