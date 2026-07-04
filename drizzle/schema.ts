@@ -25,4 +25,47 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+export const mods = mysqlTable("mods", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  author: varchar("author", { length: 255 }).notNull(),
+  version: varchar("version", { length: 50 }).notNull(),
+  category: varchar("category", { length: 100 }).notNull(),
+  tags: text("tags"), // JSON array as string
+  downloadUrl: text("downloadUrl").notNull(),
+  sourceUrl: text("sourceUrl"), // GitHub or Nexus link
+  sourceType: mysqlEnum("sourceType", ["github", "nexus", "other"]).notNull(),
+  imageUrl: text("imageUrl"),
+  rating: int("rating").default(0),
+  downloads: int("downloads").default(0),
+  compatible: varchar("compatible", { length: 100 }), // BTD6 version
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Mod = typeof mods.$inferSelect;
+export type InsertMod = typeof mods.$inferInsert;
+
+export const favorites = mysqlTable("favorites", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  modId: int("modId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Favorite = typeof favorites.$inferSelect;
+export type InsertFavorite = typeof favorites.$inferInsert;
+
+export const reviews = mysqlTable("reviews", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  modId: int("modId").notNull(),
+  rating: int("rating").notNull(),
+  comment: text("comment"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Review = typeof reviews.$inferSelect;
+export type InsertReview = typeof reviews.$inferInsert;
