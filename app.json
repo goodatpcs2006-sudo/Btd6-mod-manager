@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "BTD6 Mod Manager",
+    "slug": "btd6-mod-manager",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./client/public/favicon.ico",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./client/public/favicon.ico",
+      "resizeMode": "contain",
+      "backgroundColor": "#1e293b"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTabletMode": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./client/public/favicon.ico",
+        "backgroundColor": "#1e293b"
+      },
+      "package": "com.btd6modmanager.app",
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "INTERNET"
+      ]
+    },
+    "web": {
+      "favicon": "./client/public/favicon.ico"
+    },
+    "plugins": [
+      [
+        "expo-file-system",
+        {
+          "photosPermission": "Allow BTD6 Mod Manager to access your files to install mods"
+        }
+      ]
+    ]
+  }
+}
