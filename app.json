@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "milkvryt",
     "name": "BTD6 Mod Manager",
     "slug": "btd6-mod-manager",
     "version": "1.0.0",
@@ -23,6 +24,7 @@
         "backgroundColor": "#1e293b"
       },
       "package": "com.btd6modmanager.app",
+      "versionCode": 1,
       "permissions": [
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE",
